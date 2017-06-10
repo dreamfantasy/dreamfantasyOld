@@ -1,0 +1,72 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class StageSelectCharacter : MonoBehaviour {
+	private RectTransform _pos;
+	public RectTransform _target;
+	public float MOVE_SPEED;
+	public StageSelect _stage_select;
+	// Use this for initialization
+	void Start () {
+		_pos = GetComponent< RectTransform >( );
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if ( _target ) {
+			Vector2 distance = _target.anchoredPosition - _pos.anchoredPosition;
+			if ( distance.magnitude > MOVE_SPEED ) {
+				_pos.anchoredPosition += distance.normalized * MOVE_SPEED;
+			} else {
+				_pos.position = _target.position;
+			}
+		}
+	}
+
+	public void setTarget( RectTransform target ) {
+		bool set = false;
+		if ( target.tag == _target.tag ) {
+			_stage_select.setNext( );
+		}
+
+		switch ( _target.tag ) {
+			case "Stage1":
+				if ( target.tag == "Stage1-1" ) {
+					set = true;
+				}
+				break;
+			case "Stage1-1":
+				if ( target.tag == "Stage1" ||
+					 target.tag == "Stage1-1-1" ||
+					 target.tag == "Stage1-1-2" ) {
+					set = true;
+				}
+				break;
+			case "Stage1-1-1":
+				if ( target.tag == "Stage1-1" ||
+					 target.tag == "Stage1-1-1-1" ||
+					 target.tag == "Stage1-1-1-2" ) {
+					set = true;
+				}
+				break;
+			case "Stage1-1-2":
+				if ( target.tag == "Stage1-1" ) {
+					set = true;
+				}
+				break;
+			case "Stage1-1-1-1":
+				if ( target.tag == "Stage1-1-1" ) {
+					set = true;
+				}
+				break;
+			case "Stage1-1-1-2":
+				if ( target.tag == "Stage1-1-1" ) {
+					set = true;
+				}
+				break;
+		}
+		if ( set ) {
+			_target = target;
+		}
+	}
+}
