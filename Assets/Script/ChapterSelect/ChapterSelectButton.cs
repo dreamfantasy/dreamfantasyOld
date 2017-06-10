@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChapterSelect : MonoBehaviour {
+public class ChapterSelectButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -9,6 +9,11 @@ public class ChapterSelect : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ( ) {
+	void Update () {
+		
+	}
+
+	public void loadNextScene( ) {
+		SceneManager.LoadScene ("StageSelect");
 	}
 }
