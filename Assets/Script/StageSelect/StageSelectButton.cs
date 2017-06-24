@@ -12,14 +12,6 @@ public class StageSelectButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if( Device.getTouchPhase( ) == Device.PHASE.BEGAN )
-		{
-			// Check if the mouse was clicked over a UI element
-			if(!EventSystem.current.IsPointerOverGameObject())
-			{
-				OnClick( );
-			}
-		}
 	}
 
 	public void OnClick( ) {
