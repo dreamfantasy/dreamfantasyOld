@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class Novel {
@@ -15,12 +16,15 @@ public class Scenario : MonoBehaviour {
 	public GameObject _parentObject;
 	public Novel[ ] _novels;
 	private int _line = 0;
+	private AudioSource _audio_source;
 	private List< GameObject > _chara0_list = new List< GameObject >( );
 	private List< GameObject > _chara1_list = new List< GameObject >( );
 	private const float INTARVAL = 54;
 	// Use this for initialization
 	void Start( ) {
 		readText( );
+		_audio_source = gameObject.GetComponent< AudioSource >( );
+		_audio_source.Play( );
 	}
 	
 	// Update is called once per frame
