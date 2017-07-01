@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 
 public class StageSelect : MonoBehaviour {
-	public RectTransform _camera;
+	public RectTransform _scroll;
 	private Vector2 _before_pos;
 	// Use this for initialization
 	void Start () {
@@ -19,12 +19,12 @@ public class StageSelect : MonoBehaviour {
 			Vector3 vec = Vector3.zero;
 			vec.x = ( pos.x - _before_pos.x );
 			_before_pos = pos;
-			_camera.position += vec;
-			if ( _camera.anchoredPosition.x < -2800 ) {
-				_camera.anchoredPosition = Vector2.right * -2800;
+			_scroll.position += vec;
+			if ( _scroll.anchoredPosition.x < -2500 + Screen.width * 1.7 ) {
+				_scroll.anchoredPosition = Vector2.right * ( -2500 + (int)( Screen.width * 1.7 ) );
 			}
-			if ( _camera.position.x > 0 ) {
-				_camera.position = Vector3.right * 0;
+			if ( _scroll.position.x > 0 ) {
+				_scroll.position = Vector3.right * 0;
 			}
 		}
 	}

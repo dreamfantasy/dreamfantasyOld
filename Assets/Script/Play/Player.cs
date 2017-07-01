@@ -116,12 +116,12 @@ public class Player : MonoBehaviour {
 		}
 		if ( _hp <= 0 ) {
 			_stock--;
-			reset( );
-		}
-		if ( _stock == -1 ) {
-			_stock = -2;
-			_play.setState( Play.STATE.GAME_OVER );
-			Destroy( gameObject );
+			if ( _stock < 0 ) {
+				_play.setState( Play.STATE.GAME_OVER );
+				gameObject.SetActive( false );
+			} else {
+				reset( );
+			}
 		}
 	}
 

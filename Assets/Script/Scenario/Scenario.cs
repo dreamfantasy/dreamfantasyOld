@@ -19,7 +19,7 @@ public class Scenario : MonoBehaviour {
 	private AudioSource _audio_source;
 	private List< GameObject > _chara0_list = new List< GameObject >( );
 	private List< GameObject > _chara1_list = new List< GameObject >( );
-	private const float INTARVAL = 54;
+	private const float INTERVAL = 230;
 	// Use this for initialization
 	void Start( ) {
 		readText( );
@@ -40,22 +40,18 @@ public class Scenario : MonoBehaviour {
 
 	void readText( ) {
 		for ( int i = 0; i < _chara0_list.Count; i++ ) {
-			Vector3 pos = _chara0_list[ i ].transform.position;
-			pos.y -= INTARVAL;
-			if ( pos.y < 0 ) {
+			RectTransform trans = _chara0_list[ i ].GetComponent< RectTransform >( );
+			trans.anchoredPosition = trans.anchoredPosition + Vector2.down * INTERVAL;
+			if ( trans.anchoredPosition.y < INTERVAL ) {
 				_chara0_list[ i ].SetActive( false );
 			}
-			_chara0_list[ i ].transform.position = pos;
-			//( pos, Quaternion.identity );
 		}
 		for ( int i = 0; i < _chara1_list.Count; i++ ) {
-			Vector3 pos = _chara1_list[ i ].transform.position;
-			pos.y -= INTARVAL;
-			if ( pos.y < 0 ) {
+			RectTransform trans = _chara1_list[ i ].GetComponent< RectTransform >( );
+			trans.anchoredPosition = trans.anchoredPosition + Vector2.down * INTERVAL;
+			if ( trans.anchoredPosition.y < INTERVAL ) {
 				_chara1_list[ i ].SetActive( false );
 			}
-			_chara1_list[ i ].transform.position = pos;
-				//SetPositionAndRotation( pos, Quaternion.identity );
 		}
 
 		if ( _novels[ _line ].chara_number == 0 ) {
