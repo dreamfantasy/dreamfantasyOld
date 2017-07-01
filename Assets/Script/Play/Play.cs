@@ -7,6 +7,7 @@ public class Play : MonoBehaviour {
 	public enum STATE {
 		WAIT,
 		PLAY,
+		STAGE_CLEAR,
 		GAME_CLEAR,
 		GAME_OVER,
 	};
@@ -17,9 +18,14 @@ public class Play : MonoBehaviour {
 	private STATE _state = STATE.WAIT;
 	private int _count = 0;
 	private const int WAIT_TIME = 20;
+	private int _area = 1;
+	private const int MAX_AREA = 3;
+	public Player _player;
 	// Use this for initialization
 	void Start ( ) {
-		_text_area.text = "AREA 1/1";
+		_area = 1;
+		_text_area.text = "STAGE " + _area + "/3";
+		SceneManager.LoadScene( "Stage_0_0_area" + ( _area - 1 ), LoadSceneMode.Additive );
 	}
 
 
@@ -31,17 +37,34 @@ public class Play : MonoBehaviour {
 				_count++;
 				if ( _count > WAIT_TIME ) {
 					_state = STATE.PLAY;
-					Destroy( _text_area );
+					_text_area.text = "";
 				}
 				break;
 			case STATE.PLAY:
 				break;
+			case STATE.STAGE_CLEAR:
+				_area++;
+				if ( _area <= MAX_AREA ) {
+					setState( STATE.WAIT );
+					_player.reset( );
+					_text_area.text = "STAGE " + _area + "/3";
+					SceneManager.UnloadSceneAsync( "Stage_0_0_area" + ( _area - 2 ) );
+					SceneManager.LoadScene( "Stage_0_0_area" + ( _area - 1 ), LoadSceneMode.Additive );
+				}
+				if ( _area > MAX_AREA ) {
+					setState( STATE.GAME_CLEAR );
+				}
+				break;
 			case STATE.GAME_CLEAR:
+				if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
+					SceneManager.LoadScene( "Result" );
+				}
+				break;
 			case STATE.GAME_OVER:
-			if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
-				SceneManager.LoadScene( "Title" );
-			}
-			break;
+				if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
+					SceneManager.LoadScene( "Title" );
+				}
+				break;
 		}
 	}
 

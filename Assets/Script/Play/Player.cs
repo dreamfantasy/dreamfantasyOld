@@ -23,17 +23,21 @@ public class Player : MonoBehaviour {
 	private ACTION _action = ACTION.WAIT;
 	private Vector2 _touch_start_pos;//タッチを開始した位置
 	private GameObject _allow;
+	private int _max_hp;
+	private bool _collision = false;
 
 	void Start( ) {
-		_hp = _sprite.Length + 1;
 		Transform trans = GetComponent< Transform >( );
 		_allow = trans.Find( "Allow" ).gameObject;
 		_allow.transform.localScale = Vector3.zero;
 		_start_pos = trans.position;
+		_max_hp = _sprite.Length;
+		_hp = _max_hp;
 	}
 	
 
 	void Update( ) {
+		_collision = false;
 		switch( _action ) {
 			case ACTION.WAIT:
 				if ( _play.getState( ) == Play.STATE.PLAY ) {
@@ -89,14 +93,19 @@ public class Player : MonoBehaviour {
 
 
 	void OnCollisionEnter2D( Collision2D collision ) {
+		if ( _collision ) {
+			return;
+		}
 		damage( );
+		_collision = true;
 	}
 
 	void OnTriggerEnter2D( Collider2D other ) {
 		//ゲームクリア
 		Rigidbody2D rd = GetComponent< Rigidbody2D >( );
 		rd.velocity = Vector2.zero;
-		_play.setState( Play.STATE.GAME_CLEAR );
+		_play.setState( Play.STATE.STAGE_CLEAR );
+		_collision = true;
 	}
 
 	void damage( ) {
@@ -109,7 +118,8 @@ public class Player : MonoBehaviour {
 			_stock--;
 			reset( );
 		}
-		if ( _stock <= 0 ) {
+		if ( _stock == -1 ) {
+			_stock = -2;
 			_play.setState( Play.STATE.GAME_OVER );
 			Destroy( gameObject );
 		}
@@ -119,15 +129,17 @@ public class Player : MonoBehaviour {
 		return _hp;
 	}
 
-	private void reset( ) {
+	public void reset( ) {
+		_action = ACTION.WAIT;
 		Rigidbody2D rd = GetComponent< Rigidbody2D >( );
 		rd.velocity = Vector2.zero;
 		Transform trans = GetComponent< Transform >( );
 		trans.position = _start_pos;
-		_hp = _sprite.Length;
+		_hp = _max_hp;
 		_play.updateStockNum( _stock );
 		SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
-		sprite.sprite = _sprite[ _hp - 1 ];
-		_action = ACTION.NORMAL;
+		sprite.sprite = _sprite[ _max_hp - 1 ];
 	}
+
+	
 }
