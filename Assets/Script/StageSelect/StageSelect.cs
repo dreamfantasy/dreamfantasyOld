@@ -16,15 +16,16 @@ public class StageSelect : MonoBehaviour {
 		}
 		if ( Device.getTouchPhase( ) == Device.PHASE.MOVED ) {
 			Vector2 pos = Device.getPos( );
-			Vector3 vec = Vector3.zero;
-			vec.x = ( pos.x - _before_pos.x );
+			Vector3 vec = pos - _before_pos;
+			vec.y = 0;
 			_before_pos = pos;
 			_scroll.position += vec;
-			if ( _scroll.anchoredPosition.x < -2500 + Screen.width * 1.7 ) {
-				_scroll.anchoredPosition = Vector2.right * ( -2500 + (int)( Screen.width * 1.7 ) );
+			if ( _scroll.localPosition.x < -1770 ) {
+				_scroll.localPosition = Vector2.right * -1770 + Vector2.up * _scroll.localPosition.y;
+				
 			}
-			if ( _scroll.position.x > 0 ) {
-				_scroll.position = Vector3.right * 0;
+			if ( _scroll.localPosition.x > 0 ) {
+				_scroll.localPosition = Vector2.right * 0 + Vector2.up * _scroll.localPosition.y;
 			}
 		}
 	}
