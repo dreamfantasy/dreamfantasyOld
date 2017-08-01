@@ -23,6 +23,7 @@ public class Play : MonoBehaviour {
 	public Player _player;
 	// Use this for initialization
 	void Start ( ) {
+		//エリア1をロード
 		_area = 1;
 		_text_area.text = "STAGE " + _area + "/3";
 		SceneManager.LoadScene( "Stage_0_0_area" + ( _area - 1 ), LoadSceneMode.Additive );
