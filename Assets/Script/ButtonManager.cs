@@ -17,7 +17,7 @@ public class ButtonManager : MonoBehaviour {
 	}
 
 	public void OnRetire( ) {
-		SceneManager.LoadScene( "Title" );
+		SceneManager.LoadScene( "StageSelect" );
 	}
 
 	public void OnSelectChapter1( ) {

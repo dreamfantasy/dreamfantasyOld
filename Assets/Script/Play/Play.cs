@@ -15,26 +15,35 @@ public class Play : MonoBehaviour {
 	public GameObject _text_game_clear;
 	public GameObject _text_game_over;
 	public GameObject[ ] _stocks;
-	private STATE _state = STATE.WAIT;
-	private int _count = 0;
-	private const int WAIT_TIME = 20;
-	private int _area = 1;
-	private const int MAX_AREA = 3;
+	public GameObject[ ] _board;
 	public Player _player;
-	// Use this for initialization
+	public Switch[ ] _switch;
+
+	private const int MAX_STAGE = 3;
+	private const int WAIT_TIME = 20;
+
+	private int _count;
+	private int _stage;
+	private STATE _state;
+
+
 	void Start ( ) {
 		//エリア1をロード
-		_area = 1;
-		_text_area.text = "STAGE " + _area + "/3";
-		SceneManager.LoadScene( "Stage_0_0_area" + ( _area - 1 ), LoadSceneMode.Additive );
+		_stage = 0;
+		_count = 0;
+		_state = STATE.WAIT;
+		setAreaText( );
+
+		_board[ 0 ].SetActive( true );
+		_board[ 1 ].SetActive( false );
+		_board[ 2 ].SetActive( false );
 	}
 
-
 	
-	// Update is called once per frame
 	void Update ( ) {
 		switch ( _state ) {
 			case STATE.WAIT:
+				//一定時間エリア表示
 				_count++;
 				if ( _count > WAIT_TIME ) {
 					_state = STATE.PLAY;
@@ -44,15 +53,7 @@ public class Play : MonoBehaviour {
 			case STATE.PLAY:
 				break;
 			case STATE.STAGE_CLEAR:
-				_area++;
-				if ( _area <= MAX_AREA ) {
-					setState( STATE.WAIT );
-					_player.reset( );
-					_text_area.text = "STAGE " + _area + "/3";
-					SceneManager.UnloadSceneAsync( "Stage_0_0_area" + ( _area - 2 ) );
-					SceneManager.LoadScene( "Stage_0_0_area" + ( _area - 1 ), LoadSceneMode.Additive );
-				}
-				if ( _area > MAX_AREA ) {
+				if ( !setNextStage( ) ) {
 					setState( STATE.GAME_CLEAR );
 				}
 				break;
@@ -85,10 +86,35 @@ public class Play : MonoBehaviour {
 	}
 
 	public void updateStockNum( int stock ) {
-		for ( int i = stock; i < _stocks.Length; i++ ) {
-			if ( i >= stock ) {
-				_stocks[ i ].SetActive( false );
-			}
+		int size = _stocks.Length - stock;
+		for ( int i = 0; i < size; i++ ) {
+			int idx = i + stock;
+			_stocks[ idx ].SetActive( false );
+		}
+	}
+
+	private void setAreaText( ) {
+		_text_area.text = "STAGE " + ( _stage + 1 ) + "/3";
+	}
+
+	private bool setNextStage( ) {
+		bool result = false;
+		_stage++;
+		if ( _stage < MAX_STAGE ) {
+			setState( STATE.WAIT );
+			_player.reset( );
+			setAreaText( );
+			_board[ _stage - 1 ].SetActive( false );
+			_board[ _stage ].SetActive( true );
+			result = true;
+		}
+		return result;
+	}
+
+	public void resetSwicth( ) {
+		int switch_size = _switch.Length;
+		for ( int i = 0; i < switch_size; i++ ) {
+			_switch[ i ].reset( );
 		}
 	}
 }

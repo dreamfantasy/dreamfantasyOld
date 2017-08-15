@@ -13,26 +13,31 @@ public class Player : MonoBehaviour {
 		CLAY,
 		MAX
 	};
-	private Vector3 _start_pos;
-	public float _move_range;	//タッチを離したときのボールの動かない範囲
-	public float _move_speed;	//ボールが動くスピード
 	public Play _play;
 	public Sprite[ ] _sprite;
-	private int _stock = 3;			//玉の個数
+
+	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
+	private const int INIT_STOCK = 3;
+	private const int MOVE_SPEED = 5;
+	private const int MAX_ALLOW_SIZE = 5;
+
+	private int _stock;			//玉の個数
 	private int _hp;			//壁に当たれる回数
-	private ACTION _action = ACTION.WAIT;
-	private Vector2 _touch_start_pos;//タッチを開始した位置
+	private bool _collision;	//1フレームに1度しかあたらないようにするための変数
 	private GameObject _allow;
-	private int _max_hp;
-	private bool _collision = false;
+	private Vector2 _touch_start_pos;//タッチを開始した位置
+	private Vector2 _start_pos;
+	private ACTION _action;
 
 	void Start( ) {
 		Transform trans = GetComponent< Transform >( );
+		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;
 		_allow.transform.localScale = Vector3.zero;
-		_start_pos = trans.position;
-		_max_hp = _sprite.Length;
-		_hp = _max_hp;
+		_stock = INIT_STOCK;
+		_hp = _sprite.Length;
+		_action = ACTION.WAIT;
+		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
 	}
 	
 
@@ -58,25 +63,38 @@ public class Player : MonoBehaviour {
 
 	private void actOnStretch( ) {
 		Vector2 vec = _touch_start_pos - Device.getPos( );
-		if ( Device.getTouchPhase( ) == Device.PHASE.MOVED ) {//指を動かしている際の処理
+
+		if ( Device.getTouchPhase( ) == Device.PHASE.MOVED ) {
+			//指を動かしているとき
+
+			//矢印の大きさを計算
 			Vector2 size = Vector2.one * vec.magnitude * 0.1f;
-			if ( size.magnitude > 4 ) {
-				size = size.normalized * 4;
+			if ( size.magnitude > MAX_ALLOW_SIZE ) {
+				//矢印は一定以上の大きさにしない
+				size = size.normalized * MAX_ALLOW_SIZE;
 			}
+			_allow.transform.localScale = size;
+
+			//矢印の向きを計算( cross(外積)で回転方向、angleで角度を求めることによってrotを求める )
 			float angle = Vector2.Angle( Vector2.up + Vector2.left, vec );
 			Vector3 axis = Vector3.Cross( Vector3.up + Vector3.left, vec );
 			Quaternion rot = Quaternion.AngleAxis( angle, axis );
-			_allow.transform.localScale = size;
 			_allow.transform.localRotation = rot;
 		}
 
-		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {//指を離した際の処理
+		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
+			//指を離したとき
+
+			//矢印を見えなくする
 			_allow.transform.localScale = Vector3.zero;
-			if ( vec.magnitude > _move_range ) {//指の位置が変わってた場合
+
+			if ( vec.magnitude > MOVE_RANGE ) {
+				//指の位置が変わってた場合動かす
 				Rigidbody2D rd = GetComponent< Rigidbody2D >( );
-				rd.velocity += vec.normalized * _move_speed;
+				rd.velocity += vec.normalized * MOVE_SPEED;
 				_action = ACTION.MOVE;
-			} else {//指の位置が変わらなかった場合
+			} else {
+				//指の位置が変わらなかった場合待機状態へ戻る
 				_action = ACTION.NORMAL;
 			}
 		}
@@ -88,6 +106,7 @@ public class Player : MonoBehaviour {
 			_action = ACTION.STRETCH;
 		}
 	}
+
 	private void actOnMove( ) {
 	}
 
@@ -101,20 +120,21 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D( Collider2D other ) {
+		if ( other.tag !=  "Goal" ) {
+			return;
+		}
 		//ゲームクリア
 		Rigidbody2D rd = GetComponent< Rigidbody2D >( );
 		rd.velocity = Vector2.zero;
 		_play.setState( Play.STATE.STAGE_CLEAR );
-		_collision = true;
 	}
 
-	void damage( ) {
+	private void damage( ) {
 		_hp--;
 		if ( _hp > 0 ) {
 			SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
 			sprite.sprite = _sprite[ _hp - 1 ];
-		}
-		if ( _hp <= 0 ) {
+		} else {
 			_stock--;
 			if ( _stock < 0 ) {
 				_play.setState( Play.STATE.GAME_OVER );
@@ -131,14 +151,12 @@ public class Player : MonoBehaviour {
 
 	public void reset( ) {
 		_action = ACTION.WAIT;
-		Rigidbody2D rd = GetComponent< Rigidbody2D >( );
-		rd.velocity = Vector2.zero;
-		Transform trans = GetComponent< Transform >( );
-		trans.position = _start_pos;
-		_hp = _max_hp;
+		_hp = _sprite.Length;
 		_play.updateStockNum( _stock );
-		SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
-		sprite.sprite = _sprite[ _max_hp - 1 ];
+		_play.resetSwicth( );
+		GetComponent< Rigidbody2D	 >( ).velocity	= Vector2.zero;
+		GetComponent< Transform		 >( ).position	= _start_pos;
+		GetComponent< SpriteRenderer >( ).sprite	= _sprite[ _hp - 1 ];
 	}
 
 	
