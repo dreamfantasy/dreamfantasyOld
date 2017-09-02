@@ -76,8 +76,8 @@ public class Player : MonoBehaviour {
 			_allow.transform.localScale = size;
 
 			//矢印の向きを計算( cross(外積)で回転方向、angleで角度を求めることによってrotを求める )
-			float angle = Vector2.Angle( Vector2.up + Vector2.left, vec );
-			Vector3 axis = Vector3.Cross( Vector3.up + Vector3.left, vec );
+			float angle = Vector2.Angle( Vector2.up, vec );
+			Vector3 axis = Vector3.Cross( Vector3.up, vec );
 			Quaternion rot = Quaternion.AngleAxis( angle, axis );
 			_allow.transform.localRotation = rot;
 		}
