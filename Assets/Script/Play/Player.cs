@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	private const int MOVE_SPEED = 5;
 	private const int MAX_ALLOW_SIZE = 5;
 
-	private int _stock;			//玉の個数
+
 	private int _hp;			//壁に当たれる回数
 	private bool _collision;	//1フレームに1度しかあたらないようにするための変数
 	private GameObject _allow;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
 		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;
 		_allow.transform.localScale = Vector3.zero;
-		_stock = INIT_STOCK;
+		_play.setStockNum( INIT_STOCK );
 		_hp = _sprite.Length;
 		_action = ACTION.WAIT;
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
@@ -135,8 +135,11 @@ public class Player : MonoBehaviour {
 			SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
 			sprite.sprite = _sprite[ _hp - 1 ];
 		} else {
-			_stock--;
-			if ( _stock < 0 ) {
+			int stock = _play.getStockNum( );
+			stock--;
+			_play.setStockNum( stock );
+			if ( stock < 0 ) {
+				_play.setStockNum( 0 );
 				_play.setState( Play.STATE.GAME_OVER );
 				gameObject.SetActive( false );
 			} else {
@@ -152,7 +155,7 @@ public class Player : MonoBehaviour {
 	public void reset( ) {
 		_action = ACTION.WAIT;
 		_hp = _sprite.Length;
-		_play.updateStockNum( _stock );
+		_play.updateStockNum( );
 		_play.resetSwicth( );
 		GetComponent< Rigidbody2D	 >( ).velocity	= Vector2.zero;
 		GetComponent< Transform		 >( ).position	= _start_pos;

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Play : MonoBehaviour {
+public class Play : Scene {
 	//public GameObject _area;
 	public enum STATE {
 		WAIT,
@@ -85,10 +85,10 @@ public class Play : MonoBehaviour {
 		return _state;
 	}
 
-	public void updateStockNum( int stock ) {
-		int size = _stocks.Length - stock;
+	public void updateStockNum( ) {
+		int size = _stocks.Length - getStockNum( );
 		for ( int i = 0; i < size; i++ ) {
-			int idx = i + stock;
+			int idx = i + getStockNum( );
 			_stocks[ idx ].SetActive( false );
 		}
 	}
