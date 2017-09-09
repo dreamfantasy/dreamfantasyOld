@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StageSelect : MonoBehaviour {
+public class StageSelect : Scene {
 	public RectTransform _scroll;
 	private Vector2 _before_pos;
 	// Use this for initialization
@@ -30,7 +30,8 @@ public class StageSelect : MonoBehaviour {
 		}
 	}
 
-	public void setNext ( ) {
+	public void setNext( int stage ) {
+		setStage( stage );
 		SceneManager.LoadScene( "Scenario" );
 	}
 }

@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Title : MonoBehaviour {
+public class Title : Scene {
 	public Image touch_to_start;
 	private float _alpha_speed = 0.01f;
 	// Use this for initialization

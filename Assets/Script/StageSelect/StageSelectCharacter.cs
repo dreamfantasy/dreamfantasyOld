@@ -26,7 +26,22 @@ public class StageSelectCharacter : MonoBehaviour {
 	public void setTarget( RectTransform target ) {
 		bool set = false;
 		if ( target.tag == _target.tag ) {
-			_stage_select.setNext( );
+			int stage = 0;
+			switch ( _target.tag ) {
+			case "Stage1":
+				stage = 0;
+				break;
+			case "Stage1-1":
+				stage = 1;
+				break;
+			case "Stage1-1-1":
+			case "Stage1-1-2":
+			case "Stage1-1-1-1":
+			case "Stage1-1-1-2":
+				stage = 2;
+				break;
+		}
+			_stage_select.setNext( stage );
 		}
 
 		switch ( _target.tag ) {

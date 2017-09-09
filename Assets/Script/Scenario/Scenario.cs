@@ -10,7 +10,7 @@ public class Novel {
 	public int chara_number;
 }
 
-public class Scenario : MonoBehaviour {
+public class Scenario : Scene {
 	public GameObject _chara0;
 	public GameObject _chara1;
 	public GameObject _parentObject;
@@ -33,7 +33,7 @@ public class Scenario : MonoBehaviour {
 			if ( _line < _novels.Length ) {
 				readText( );
 			} else {
-				SceneManager.LoadScene( "Play" );
+				SceneManager.LoadScene( "Play" + getStage( ) );
 			}
 		}
 	}
