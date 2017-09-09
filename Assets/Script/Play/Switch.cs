@@ -17,10 +17,12 @@ public class Switch : MonoBehaviour {
 		if ( other.tag != "Player" ) {
 			return;
 		}
+		GetComponent< SpriteRenderer >( ).color = new Color( 1, 0, 0 );
 		_goal.SetActive( true );
 	}
 
 	public void reset( ) {
+		GetComponent< SpriteRenderer >( ).color = new Color( 1, 1, 1 );
 		_goal.SetActive( false );
 	}
 }
