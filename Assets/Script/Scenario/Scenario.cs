@@ -16,15 +16,15 @@ public class Scenario : Scene {
 	public GameObject _parentObject;
 	public Novel[ ] _novels;
 	private int _line = 0;
-	private AudioSource _audio_source;
+	private AudioSource _bgm;
 	private List< GameObject > _chara0_list = new List< GameObject >( );
 	private List< GameObject > _chara1_list = new List< GameObject >( );
 	private const float INTERVAL = 230;
 	// Use this for initialization
 	void Start( ) {
 		readText( );
-		_audio_source = gameObject.GetComponent< AudioSource >( );
-		_audio_source.Play( );
+		_bgm = gameObject.GetComponent< AudioSource >( );
+		_bgm.Play( );
 	}
 	
 	// Update is called once per frame
@@ -36,6 +36,10 @@ public class Scenario : Scene {
 				string scene = "Play" + getStage( );
 				SceneManager.LoadScene( scene );
 			}
+		}
+
+		if ( !_bgm.isPlaying ) {
+			_bgm.Play( );
 		}
 	}
 

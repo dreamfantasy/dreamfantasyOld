@@ -4,11 +4,16 @@ using UnityEngine.SceneManagement;
 public class StageSelect : Scene {
 	public RectTransform _scroll;
 	private Vector2 _before_pos;
-	// Use this for initialization
+	private AudioSource _se;
+	private int _next;
+	private int _count;
+	private const int WAIT_COUNT = 10;
+
 	void Start () {
+		_next = -1;
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 		if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
@@ -28,10 +33,19 @@ public class StageSelect : Scene {
 				_scroll.localPosition = Vector2.right * 0 + Vector2.up * _scroll.localPosition.y;
 			}
 		}
+
+		if ( _next >= 0 ) {
+				_count++;
+			if ( _count > WAIT_COUNT ) {
+				setStage( _next );
+				SceneManager.LoadScene( "Scenario" );
+			}
+		}
 	}
 
 	public void setNext( int stage ) {
-		setStage( stage );
-		SceneManager.LoadScene( "Scenario" );
+		_se.Play( );
+		_next = stage;
+		_count = 0;
 	}
 }

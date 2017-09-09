@@ -18,6 +18,8 @@ public class Play : Scene {
 	public GameObject[ ] _board;
 	public Player _player;
 	public Switch[ ] _switch;
+	public AudioSource _bgm;
+	public AudioSource _goal_sound;
 
 	private const int MAX_STAGE = 3;
 	private const int WAIT_TIME = 20;
@@ -37,6 +39,8 @@ public class Play : Scene {
 		_board[ 0 ].SetActive( true );
 		_board[ 1 ].SetActive( false );
 		_board[ 2 ].SetActive( false );
+		
+		_bgm.Play( );
 	}
 
 	
@@ -68,10 +72,15 @@ public class Play : Scene {
 				}
 				break;
 		}
+
+		if ( !_bgm.isPlaying ) {
+			_bgm.Play( );
+		}
 	}
 
 	public void setState( STATE state ) {
 		if ( state == STATE.GAME_CLEAR ) {
+			_goal_sound.Play( );
 			_text_game_clear.SetActive( true );
 		}
 		if ( state == STATE.GAME_OVER ) {

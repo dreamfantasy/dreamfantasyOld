@@ -6,9 +6,11 @@ public class StageSelectCharacter : MonoBehaviour {
 	public RectTransform _target;
 	public float MOVE_SPEED;
 	public StageSelect _stage_select;
+	private AudioSource _select_se;
 	// Use this for initialization
 	void Start () {
 		_pos = GetComponent< RectTransform >( );
+		_select_se = GetComponent< AudioSource >( );
 	}
 	
 	// Update is called once per frame
@@ -81,6 +83,7 @@ public class StageSelectCharacter : MonoBehaviour {
 				break;
 		}
 		if ( set ) {
+			_select_se.Play( );
 			_target = target;
 		}
 	}

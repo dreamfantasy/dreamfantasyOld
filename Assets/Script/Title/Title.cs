@@ -5,9 +5,12 @@ using UnityEngine.UI;
 public class Title : Scene {
 	public Image touch_to_start;
 	private float _alpha_speed = 0.01f;
+	private AudioSource _bgm;
 	// Use this for initialization
 	void Start ( ) {
 		touch_to_start.color = new Color( 1, 1, 1, 0 );
+		_bgm = gameObject.GetComponent< AudioSource >( );
+		_bgm.Play( );
 	}
 	
 	// Update is called once per frame
@@ -30,6 +33,9 @@ public class Title : Scene {
 		
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 			SceneManager.LoadScene( "ChapterSelect" );
+		}
+		if ( !_bgm.isPlaying ) {
+			_bgm.Play( );
 		}
 	}
 }

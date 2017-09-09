@@ -28,6 +28,7 @@ public class Player : MonoBehaviour {
 	private Vector2 _touch_start_pos;//タッチを開始した位置
 	private Vector2 _start_pos;
 	private ACTION _action;
+	private AudioSource _ref_se;
 
 	void Start( ) {
 		Transform trans = GetComponent< Transform >( );
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour {
 		_hp = _sprite.Length;
 		_action = ACTION.WAIT;
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
+		_ref_se = GetComponent< AudioSource >( );
 	}
 	
 
@@ -115,6 +117,7 @@ public class Player : MonoBehaviour {
 		if ( _collision ) {
 			return;
 		}
+		_ref_se.Play( );
 		damage( );
 		_collision = true;
 	}
