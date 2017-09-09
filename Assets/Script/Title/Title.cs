@@ -13,7 +13,6 @@ public class Title : Scene {
 	// Update is called once per frame
 	void Update () {
 		float alpha = touch_to_start.color.a;
-		Debug.Log( alpha );
 		alpha += _alpha_speed;
 		if ( _alpha_speed > 0 ) {
 			if ( alpha > 1 ) {

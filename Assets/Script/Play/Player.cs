@@ -120,7 +120,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D( Collider2D other ) {
-		if ( other.tag !=  "Goal" ) {
+		Goal goal = other.GetComponent< Goal >( );
+		if ( !goal ) {
+			return;
+		}
+		if ( goal.isTrans( ) ) {
 			return;
 		}
 		//ゲームクリア
