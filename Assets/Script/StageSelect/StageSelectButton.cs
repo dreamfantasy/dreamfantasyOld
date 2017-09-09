@@ -8,7 +8,6 @@ public class StageSelectButton : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_button = GetComponent< RectTransform >( );
-		_select_se = GetComponent< AudioSource >( );
 	}
 	
 	// Update is called once per frame
@@ -16,7 +15,6 @@ public class StageSelectButton : MonoBehaviour {
 	}
 
 	public void OnClick( ) {
-		_select_se.Play( );
 		_character.setTarget( _button );
 	}
 }

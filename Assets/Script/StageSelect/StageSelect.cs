@@ -11,6 +11,8 @@ public class StageSelect : Scene {
 
 	void Start () {
 		_next = -1;
+		_count = 0;
+		_se = GetComponent< AudioSource >( );
 	}
 	
 
