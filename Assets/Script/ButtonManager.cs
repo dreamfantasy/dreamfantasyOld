@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonManager : MonoBehaviour {
+public class ButtonManager : Scene {
 
 	// Use this for initialization
 	void Start () {
@@ -13,7 +13,7 @@ public class ButtonManager : MonoBehaviour {
 		
 	}
 	public void OnSkip( ) {
-		SceneManager.LoadScene( "Play" );
+		SceneManager.LoadScene( "Play" + getStage( ) );
 	}
 
 	public void OnRetire( ) {

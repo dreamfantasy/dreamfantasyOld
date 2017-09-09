@@ -26,7 +26,7 @@ public class StageSelectCharacter : MonoBehaviour {
 	public void setTarget( RectTransform target ) {
 		bool set = false;
 		if ( target.tag == _target.tag ) {
-			int stage = 0;
+			int stage = 2;
 			switch ( _target.tag ) {
 			case "Stage1":
 				stage = 0;

@@ -33,7 +33,8 @@ public class Scenario : Scene {
 			if ( _line < _novels.Length ) {
 				readText( );
 			} else {
-				SceneManager.LoadScene( "Play" + getStage( ) );
+				string scene = "Play" + getStage( );
+				SceneManager.LoadScene( scene );
 			}
 		}
 	}
