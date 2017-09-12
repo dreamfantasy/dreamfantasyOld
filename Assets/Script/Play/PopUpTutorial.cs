@@ -16,6 +16,7 @@ public class PopUpTutorial : MonoBehaviour {
 		_tutorial = TUTORIAL.TUTORIAL_1;
 		_sprite_id = 0;
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _sprite_id ];
+		_sprite_id++;
 		_active = false;
 		gameObject.SetActive( false );
 	}
@@ -53,9 +54,9 @@ public class PopUpTutorial : MonoBehaviour {
 	private bool updatePhase1( ) {
 		bool end = false;
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			if ( _sprite_id < 5 ) {
-				_sprite_id++;
+			if ( _sprite_id < 6 ) {
 				GetComponent< SpriteRenderer >( ).sprite = _sprite[ _sprite_id ];
+				_sprite_id++;
 			} else {
 				end = true;
 			}
@@ -66,9 +67,9 @@ public class PopUpTutorial : MonoBehaviour {
 	private bool updatePhase2( ) {
 		bool end = false;
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			if ( _sprite_id < 11 ) {
-				_sprite_id++;
+			if ( _sprite_id < 12 ) {
 				GetComponent< SpriteRenderer >( ).sprite = _sprite[ _sprite_id ];
+				_sprite_id++;
 			} else {
 				end = true;
 			}
@@ -79,9 +80,9 @@ public class PopUpTutorial : MonoBehaviour {
 	private bool updatePhase3( ) {
 		bool end = false;
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			if ( _sprite_id < 15 ) {
-				_sprite_id++;
+			if ( _sprite_id < 16 ) {
 				GetComponent< SpriteRenderer >( ).sprite = _sprite[ _sprite_id ];
+				_sprite_id++;
 			} else {
 				end = true;
 			}
@@ -92,6 +93,7 @@ public class PopUpTutorial : MonoBehaviour {
 	public void setActive( ) {
 		_active = true;
 		gameObject.SetActive( true );
+		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _sprite_id ];
 	}
 
 	public bool isActive( ) {
@@ -110,11 +112,11 @@ public class PopUpTutorial : MonoBehaviour {
 				_tutorial = TUTORIAL.TUTORIAL_1;
 				break;
 			case TUTORIAL.TUTORIAL_3:
-				_sprite_id = 5;
+				_sprite_id = 6;
 				_tutorial = TUTORIAL.TUTORIAL_2;
 				break;
 			case TUTORIAL.TUTORIAL_END:
-				_sprite_id = 11;
+				_sprite_id = 12;
 				_tutorial = TUTORIAL.TUTORIAL_2;
 				break;
 		}

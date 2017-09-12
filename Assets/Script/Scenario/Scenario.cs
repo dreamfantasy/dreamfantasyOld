@@ -19,7 +19,7 @@ public class Scenario : Scene {
 	private AudioSource _bgm;
 	private List< GameObject > _chara0_list = new List< GameObject >( );
 	private List< GameObject > _chara1_list = new List< GameObject >( );
-	private const float INTERVAL = 230;
+	private const float INTERVAL = 200;
 	private static bool _prologue = true;
 	// Use this for initialization
 	void Start( ) {
