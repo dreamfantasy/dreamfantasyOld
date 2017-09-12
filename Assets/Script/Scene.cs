@@ -6,6 +6,7 @@ public class Scene : MonoBehaviour {
 	private static int _stock_num = 0;
 	private static int _chapter = 0;
 	private static int _stage = 0;
+	private static bool _tutorial = true;
 	// Use this for initialization
 	void Start ( ) {
 	}
@@ -37,5 +38,13 @@ public class Scene : MonoBehaviour {
 	public int getChapter( ) {
 		return _chapter;
 	}
-		
+	
+	public void setTutorial( bool value = false ) {
+		_tutorial = value;
+	}
+
+	public bool isTutorial( ) {
+		return _tutorial;
+	}
+
 }

@@ -13,7 +13,12 @@ public class Result : Scene {
 	// Update is called once per frame
 	void Update ( ) {
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			SceneManager.LoadScene( "StageSelect" );
+			if ( isTutorial( ) ) {
+				setTutorial( );
+				SceneManager.LoadScene( "ChapterSelect" );
+			} else {
+				SceneManager.LoadScene( "StageSelect" + getChapter( ) );
+			}
 		}
 	}
 }

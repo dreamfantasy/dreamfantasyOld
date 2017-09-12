@@ -126,4 +126,11 @@ public class Play : Scene {
 			_switch[ i ].reset( );
 		}
 	}
+
+	public void retire( ) {	
+		if ( isTutorial( ) ) {
+			SceneManager.LoadScene( "TitleTutorial" + getChapter( ) );
+		}
+		SceneManager.LoadScene( "StageSelect" + getChapter( ) );
+	}
 }

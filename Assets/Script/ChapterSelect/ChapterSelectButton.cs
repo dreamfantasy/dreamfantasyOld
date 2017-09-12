@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
 public class ChapterSelectButton : MonoBehaviour {
-	public ChapterSelect scene;
+	public ChapterSelect _chapter_select;
 
 	// Use this for initialization
-	void Start () {
+	void Start( ) {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update( ) {
 	}
 
-	public void loadNextScene( ) {
-		scene.setNext( 0 );
+	public void select( int chapter ) {
+		_chapter_select.select( chapter );
 	}
 }

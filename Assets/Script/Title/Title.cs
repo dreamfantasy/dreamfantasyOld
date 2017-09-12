@@ -7,14 +7,14 @@ public class Title : Scene {
 	private float _alpha_speed = 0.01f;
 	private AudioSource _bgm;
 	// Use this for initialization
-	void Start ( ) {
+	void Start( ) {
 		touch_to_start.color = new Color( 1, 1, 1, 0 );
 		_bgm = gameObject.GetComponent< AudioSource >( );
 		_bgm.Play( );
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update( ) {
 		float alpha = touch_to_start.color.a;
 		alpha += _alpha_speed;
 		if ( _alpha_speed > 0 ) {
@@ -32,7 +32,11 @@ public class Title : Scene {
 
 		
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			SceneManager.LoadScene( "ChapterSelect" );
+			if ( isTutorial( ) ) {
+				SceneManager.LoadScene( "ScenarioTutorial" );
+			} else {
+				SceneManager.LoadScene( "ChapterSelect" );
+			}
 		}
 		if ( !_bgm.isPlaying ) {
 			_bgm.Play( );

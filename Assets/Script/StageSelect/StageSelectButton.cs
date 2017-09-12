@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class StageSelectButton : MonoBehaviour {
-	private RectTransform _button;
+	private RectTransform _pos;
 	public StageSelectCharacter _character;
 	// Use this for initialization
-	void Start () {
-		_button = GetComponent< RectTransform >( );
+	void Start( ) {
+		_pos = GetComponent< RectTransform >( );
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update( ) {
 	}
 
-	public void OnClick( ) {
-		_character.setTarget( _button );
+	public void select( int stage ) {
+		_character.setTarget( _pos, stage );
 	}
 }

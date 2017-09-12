@@ -22,13 +22,13 @@ public class Player : MonoBehaviour {
 	private const int MAX_ALLOW_SIZE = 5;
 
 
-	private int _hp;			//壁に当たれる回数
-	private bool _collision;	//1フレームに1度しかあたらないようにするための変数
-	private GameObject _allow;
-	private Vector2 _touch_start_pos;//タッチを開始した位置
-	private Vector2 _start_pos;
+	protected int _hp;			//壁に当たれる回数
+	protected bool _collision;	//1フレームに1度しかあたらないようにするための変数
+	protected GameObject _allow;
+	protected Vector2 _touch_start_pos;//タッチを開始した位置
+	protected Vector2 _start_pos;
+	protected AudioSource _ref_se;
 	private ACTION _action;
-	private AudioSource _ref_se;
 
 	void Start( ) {
 		Transform trans = GetComponent< Transform >( );
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour {
 		return _hp;
 	}
 
-	public void reset( ) {
+	virtual public void reset( ) {
 		_action = ACTION.WAIT;
 		_hp = _sprite.Length;
 		_play.updateStockNum( );
