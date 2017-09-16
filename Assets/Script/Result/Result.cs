@@ -14,8 +14,8 @@ public class Result : Scene {
 	void Update ( ) {
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 			if ( isTutorial( ) ) {
-				setTutorial( );
-				SceneManager.LoadScene( "ChapterSelect" );
+				setTutorial( false );
+				SceneManager.LoadScene( "StageSelect0" );
 			} else {
 				SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 			}

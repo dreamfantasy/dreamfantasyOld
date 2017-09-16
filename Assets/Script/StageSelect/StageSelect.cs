@@ -35,6 +35,6 @@ public class StageSelect : Scene {
 	public void selectStage( int stage ) {
 		_se.Play( );
 		setStage( stage );
-		SceneManager.LoadScene( "Scenario" + getChapter( ) + "_" + stage );
+		SceneManager.LoadScene( "Scenario" );
 	}
 }
