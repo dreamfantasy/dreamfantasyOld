@@ -20,7 +20,11 @@ public class Scenario : Scene {
 		if ( isTutorial( ) ) {
 			novel = ( GameObject )Resources.Load( "Prefab/Scenario/ScenarioTurorial" );
 		} else {
-			novel = ( GameObject )Resources.Load( "Prefab/Scenario/Scenario" + getChapter( ).ToString( ) + "_" + getStage( ).ToString( ) );
+			if ( getStage( ) < 3 ) {
+				novel = ( GameObject )Resources.Load( "Prefab/Scenario/Scenario" + getChapter( ).ToString( ) + "_" + getStage( ).ToString( ) );
+			} else {
+				novel = ( GameObject )Resources.Load( "Prefab/Scenario/ScenarioEnd" );
+			}
 		}
 		_novels = novel.GetComponent< ScenarioNovel >( ).getNovel( );
 		_bgm = gameObject.GetComponent< AudioSource >( );
@@ -65,7 +69,12 @@ public class Scenario : Scene {
 		if ( isTutorial( ) ) {
 			SceneManager.LoadScene( "PlayTutorial" );
 		} else {
-			SceneManager.LoadScene( "Play" + getChapter( ) + "_" + getStage( ) );
+			if ( getStage( ) < 3 ) {
+				SceneManager.LoadScene( "Play" + getChapter( ) + "_" + getStage( ) );
+			} else {
+				setTutorial( true );
+				SceneManager.LoadScene( "Title" );
+			}
 		}
 	}
 
