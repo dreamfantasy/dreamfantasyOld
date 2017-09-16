@@ -65,6 +65,9 @@ public class Play : Scene {
 					if ( getStage( ) > getClearStage( ) ) {
 						setClearStage( getClearStage( ) );
 					}
+					if ( isTutorial( ) ) {
+						setTutorial( false );
+					}
 					SceneManager.LoadScene( "StageSelect0" );
 					//SceneManager.LoadScene( "Result" );
 				}
