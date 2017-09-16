@@ -16,7 +16,7 @@ public class Play : Scene {
 	public GameObject _text_game_over;
 	public GameObject[ ] _stocks;
 	public GameObject[ ] _board;
-	public Player _player;
+	public Player[ ] _player;
 	public Switch[ ] _switch;
 	public AudioSource _bgm;
 	public AudioSource _goal_sound;
@@ -111,7 +111,6 @@ public class Play : Scene {
 		_stage++;
 		if ( _stage < MAX_STAGE ) {
 			setState( STATE.WAIT );
-			_player.reset( );
 			setAreaText( );
 			_board[ _stage - 1 ].SetActive( false );
 			_board[ _stage ].SetActive( true );
