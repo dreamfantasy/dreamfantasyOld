@@ -6,6 +6,7 @@ public class WallMove : MonoBehaviour {
 	public int _reverse_time;
 	public Vector2 vec;
 	private int _count;
+	private bool _col;
 	// Use this for initialization
 	void Start () {
 		_count = 0;
@@ -13,6 +14,7 @@ public class WallMove : MonoBehaviour {
 		rd.velocity = vec;
 	}
 	void Update () {
+		_col = false;
 		_count++;
 		if (_count % _reverse_time == 0) {
 			reverse( );
@@ -20,7 +22,10 @@ public class WallMove : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D collision) {
 		if ( collision.collider.gameObject.tag != "Player" ) {
-			reverse( );
+			if ( !_col ) {
+				_col = true;
+				reverse( );
+			}
 		}
 	}
 
