@@ -16,7 +16,6 @@ public class Play : Scene {
 	public GameObject _text_game_over;
 	public GameObject[ ] _stocks;
 	public GameObject[ ] _board;
-	public Player[ ] _player;
 	public Switch[ ] _switch;
 	public AudioSource _bgm;
 	public AudioSource _goal_sound;
