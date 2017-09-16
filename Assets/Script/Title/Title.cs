@@ -33,9 +33,10 @@ public class Title : Scene {
 		
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 			if ( isTutorial( ) ) {
-				SceneManager.LoadScene( "ScenarioTutorial" );
+				SceneManager.LoadScene( "Scenario" );
 			} else {
-				SceneManager.LoadScene( "ChapterSelect" );
+				//SceneManager.LoadScene( "ChapterSelect" );
+				SceneManager.LoadScene( "StageSelect0" );
 			}
 		}
 		if ( !_bgm.isPlaying ) {

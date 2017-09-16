@@ -4,28 +4,28 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
 
-[System.Serializable]
-public class Novel {
-	public string scenario;
-	public int chara_number;
-}
+
 
 public class Scenario : Scene {
-	public GameObject _chara0;
-	public GameObject _chara1;
+	public GameObject _text_box;
 	public GameObject _parentObject;
-	public Novel[ ] _novels;
+	private string[ ] _novels;
 	private int _line = 0;
 	private AudioSource _bgm;
-	private List< GameObject > _chara0_list = new List< GameObject >( );
-	private List< GameObject > _chara1_list = new List< GameObject >( );
-	private const float INTERVAL = 200;
-	private static bool _prologue = true;
+	private List< GameObject > _text_list = new List< GameObject >( );
+	private const float INTERVAL = 260;
 	// Use this for initialization
 	void Start( ) {
-		readText( );
+		GameObject novel;
+		if ( isTutorial( ) ) {
+			novel = ( GameObject )Resources.Load( "Prefab/Scenario/ScenarioTurorial" );
+		} else {
+			novel = ( GameObject )Resources.Load( "Prefab/Scenario/Scenario" + getChapter( ).ToString( ) + "_" + getStage( ).ToString( ) );
+		}
+		_novels = novel.GetComponent< ScenarioNovel >( ).getNovel( );
 		_bgm = gameObject.GetComponent< AudioSource >( );
 		_bgm.Play( );
+		readText( );
 	}
 	
 	// Update is called once per frame
@@ -44,36 +44,20 @@ public class Scenario : Scene {
 	}
 
 	void readText( ) {
-		for ( int i = 0; i < _chara0_list.Count; i++ ) {
-			RectTransform trans = _chara0_list[ i ].GetComponent< RectTransform >( );
+		for ( int i = 0; i < _text_list.Count; i++ ) {
+			RectTransform trans = _text_list[ i ].GetComponent< RectTransform >( );
 			trans.anchoredPosition = trans.anchoredPosition + Vector2.down * INTERVAL;
-			if ( trans.anchoredPosition.y < INTERVAL ) {
-				_chara0_list[ i ].SetActive( false );
+			if ( trans.anchoredPosition.y < INTERVAL / 2 ) {
+				_text_list[ i ].SetActive( false );
 			}
 		}
-		for ( int i = 0; i < _chara1_list.Count; i++ ) {
-			RectTransform trans = _chara1_list[ i ].GetComponent< RectTransform >( );
-			trans.anchoredPosition = trans.anchoredPosition + Vector2.down * INTERVAL;
-			if ( trans.anchoredPosition.y < INTERVAL ) {
-				_chara1_list[ i ].SetActive( false );
-			}
-		}
-
-		if ( _novels[ _line ].chara_number == 0 ) {
-			GameObject tmp = Instantiate( _chara0 );
-			tmp.SetActive( true );
-			tmp.transform.SetParent( _parentObject.transform, false );
-			Text text = tmp.transform.Find( "Text" ).gameObject.GetComponent< Text >( );
-			text.text = _novels[ _line ].scenario;
-			_chara0_list.Add( tmp );
-		} else {
-			GameObject tmp = Instantiate( _chara1 );
-			tmp.SetActive( true );
-			tmp.transform.SetParent( _parentObject.transform, false );
-			Text text = tmp.transform.Find( "Text" ).gameObject.GetComponent< Text >( );
-			text.text = _novels[ _line ].scenario;
-			_chara1_list.Add( tmp );
-		}
+		GameObject tmp = Instantiate( _text_box );
+		tmp.SetActive( true );
+		tmp.transform.SetParent( _parentObject.transform, false );
+		Text text = tmp.transform.Find( "Text" ).gameObject.GetComponent< Text >( );
+		text.text = _novels[ _line ];
+		_text_list.Add( tmp );
+		
 		_line++;
 	}
 
