@@ -62,6 +62,9 @@ public class Play : Scene {
 				break;
 			case STATE.GAME_CLEAR:
 				if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
+					if ( getStage( ) > getClearStage( ) ) {
+						setClearStage( getClearStage( ) );
+					}
 					SceneManager.LoadScene( "Result" );
 				}
 				break;

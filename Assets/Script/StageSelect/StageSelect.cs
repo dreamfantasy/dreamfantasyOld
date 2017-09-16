@@ -2,34 +2,24 @@
 using UnityEngine.SceneManagement;
 
 public class StageSelect : Scene {
-	public RectTransform _scroll;
-	private Vector2 _before_pos;
+	public GameObject[ ] _button;
 	private AudioSource _se;
 
 	void Start( ) {
 		_se = GetComponent< AudioSource >( );
+		int size = _button.Length;
+		int clear_stage = getClearStage( );
+		for ( int i = 0; i < size; i++ ) {
+			if ( i <= clear_stage + 1 ) {
+				_button[ i ].SetActive( true );
+ 			} else {
+				_button[ i ].SetActive( false );	
+			}
+		}
 	}
 	
 
 	void Update( ) {
-		
-		if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
-			_before_pos = Device.getPos( );
-		}
-		if ( Device.getTouchPhase( ) == Device.PHASE.MOVED ) {
-			Vector2 pos = Device.getPos( );
-			Vector3 vec = pos - _before_pos;
-			vec.y = 0;
-			_before_pos = pos;
-			_scroll.position += vec;
-			if ( _scroll.localPosition.x < -1770 ) {
-				_scroll.localPosition = Vector2.right * -1770 + Vector2.up * _scroll.localPosition.y;
-				
-			}
-			if ( _scroll.localPosition.x > 0 ) {
-				_scroll.localPosition = Vector2.right * 0 + Vector2.up * _scroll.localPosition.y;
-			}
-		}
 	}
 
 	public void selectStage( int stage ) {
