@@ -64,8 +64,8 @@ public class Play : Scene {
 				break;
 			case STATE.GAME_CLEAR:
 				if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-					if ( getStage( ) > getClearStage( ) ) {
-						setClearStage( getClearStage( ) );
+					if ( getStage( ) >= getClearStage( ) ) {
+						setClearStage( getClearStage( ) + 1 );
 					}
 					if ( isTutorial( ) ) {
 						setTutorial( false );
