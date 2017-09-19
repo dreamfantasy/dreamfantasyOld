@@ -41,11 +41,11 @@ public class Scene : MonoBehaviour {
 	}
 
 	public void setChapter( int num ) {
-		_chapter = num;
+		_chapter = 0;
 	}
 
 	public int getChapter( ) {
-		return 0;
+		return _chapter;
 	}
 	
 	public void setTutorial( bool value = false ) {

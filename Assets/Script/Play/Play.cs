@@ -21,7 +21,7 @@ public class Play : Scene {
 	public AudioSource _goal_sound;
 
 	private const int MAX_STAGE = 3;
-	private const int WAIT_TIME = 20;
+	private const int WAIT_TIME = 30;
 
 	private int _count;
 	private int _stage;
@@ -49,8 +49,10 @@ public class Play : Scene {
 				//一定時間エリア表示
 				_count++;
 				if ( _count > WAIT_TIME ) {
-					_state = STATE.PLAY;
-					_text_area.text = "";
+					if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
+						_state = STATE.PLAY;
+						_text_area.text = "";
+					}
 				}
 				break;
 			case STATE.PLAY:
@@ -61,7 +63,7 @@ public class Play : Scene {
 				}
 				break;
 			case STATE.GAME_CLEAR:
-				if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
+				if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 					if ( getStage( ) > getClearStage( ) ) {
 						setClearStage( getClearStage( ) );
 					}
@@ -73,8 +75,12 @@ public class Play : Scene {
 				}
 				break;
 			case STATE.GAME_OVER:
-				if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
-					SceneManager.LoadScene( "Title" );
+				if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
+					if ( isTutorial( ) ) {
+						SceneManager.LoadScene ( "TitleTutorial" );
+					} else {
+						SceneManager.LoadScene( "StageSelect" + getChapter( ) );
+					}
 				}
 				break;
 		}
@@ -134,7 +140,7 @@ public class Play : Scene {
 
 	public void retire( ) {	
 		if ( isTutorial( ) ) {
-			SceneManager.LoadScene( "TitleTutorial" + getChapter( ) );
+			SceneManager.LoadScene( "TitleTutorial" );
 		}
 		SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 	}
