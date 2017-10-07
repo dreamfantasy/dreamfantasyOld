@@ -39,6 +39,9 @@ public class StageSelectCharacter : MonoBehaviour {
 	/*---------------以降メンバ関数-----------------*/
 	
 	public void setTarget( RectTransform pos, int stage ) {
+		if ( !_stage_select.isClearStage( stage ) ) {
+			return;
+		}
 		_select_se.Play( );
 		//妖精がいるボタンと同じ場所を選択した場合は
 		//シーン遷移

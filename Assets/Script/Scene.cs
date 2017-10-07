@@ -36,7 +36,7 @@ public class Scene : MonoBehaviour {
 		_clear_stage = num;
 	}
 
-	public int getClearStage( ) {
+	public static int getClearStage( ) {
 		return _clear_stage;
 	}
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StageSelect : Scene {
 	public GameObject[ ] _button;
@@ -8,12 +9,9 @@ public class StageSelect : Scene {
 	void Start( ) {
 		_se = GetComponent< AudioSource >( );
 		int size = _button.Length;
-		int clear_stage = getClearStage( );
 		for ( int i = 0; i < size; i++ ) {
-			if ( i <= clear_stage + 1 ) {
-				_button[ i ].SetActive( true );
- 			} else {
-				_button[ i ].SetActive( false );	
+			if ( !isClearStage( i ) ) {
+				_button[ i ].GetComponent< Image >( ).color = new Color( 1, 0, 0 );
 			}
 		}
 	}
@@ -26,5 +24,13 @@ public class StageSelect : Scene {
 		_se.Play( );
 		setStage( stage );
 		SceneManager.LoadScene( "Scenario" );
+	}
+
+	public bool isClearStage( int stage ) {
+		bool clear = false;
+		if ( getClearStage( ) >= stage ) {
+			clear = true;
+		}
+		return clear;
 	}
 }
