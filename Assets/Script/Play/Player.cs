@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
 			//指を動かしているとき
 
 			//矢印の大きさを計算
-			Vector2 size = Vector2.one * vec.magnitude * 0.1f;
+			Vector2 size = Vector2.one * vec.magnitude * 0.002f;
 			if ( size.magnitude > MAX_ALLOW_SIZE ) {
 				//矢印は一定以上の大きさにしない
 				size = size.normalized * MAX_ALLOW_SIZE;
