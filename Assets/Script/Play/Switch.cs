@@ -15,7 +15,7 @@ public class Switch : MonoBehaviour {
 		if ( other.tag != "Player" ) {
 			return;
 		}
-		GetComponent< SpriteRenderer >( ).color = new Color( 1, 0, 0 );
+		GetComponent< SpriteRenderer >( ).color = new Color( 1, 0.4f, 0.4f );
 		_goal.GetComponent< Goal >( ).setTrans( false );
 	}
 

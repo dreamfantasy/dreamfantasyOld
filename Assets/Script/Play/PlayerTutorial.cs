@@ -20,7 +20,7 @@ public class PlayerTutorial : Player {
 
 	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
 	private const int INIT_STOCK = 3;
-	private const int MOVE_SPEED = 5;
+	private const int MOVE_SPEED = 10;
 	private const int MAX_ALLOW_SIZE = 5;
 
 	private ACTION _action;
