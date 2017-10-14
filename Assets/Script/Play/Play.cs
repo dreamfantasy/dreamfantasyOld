@@ -35,7 +35,7 @@ public class Play : Scene {
 		_state = STATE.WAIT;
 		setAreaText( );
 		setStockNum( MAX_STOCK );
-
+		updateStockNum( );
 		_board[ 0 ].SetActive( true );
 		_board[ 1 ].SetActive( false );
 		_board[ 2 ].SetActive( false );
@@ -151,8 +151,10 @@ public class Play : Scene {
 		int stock = getStockNum( ) - 1;
 		if ( stock < 0 ) {
 			stock = 0;
-			setState( Play.STATE.GAME_OVER );
+			setState( STATE.GAME_OVER );
 		}
 		setStockNum( stock );
+		
+		updateStockNum( );
 	}
 }

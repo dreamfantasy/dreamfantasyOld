@@ -156,7 +156,6 @@ public class Player : MonoBehaviour {
 	virtual public void reset( ) {
 		_action = ACTION.WAIT;
 		_hp = _sprite.Length;
-		_play.updateStockNum( );
 		_play.resetSwicth( );
 		GetComponent< Rigidbody2D	 >( ).velocity	= Vector2.zero;
 		GetComponent< Transform		 >( ).position	= _start_pos;
