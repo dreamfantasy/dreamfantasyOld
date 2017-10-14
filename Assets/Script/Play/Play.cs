@@ -16,7 +16,6 @@ public class Play : Scene {
 	public GameObject _text_game_over;
 	public GameObject[ ] _stocks;
 	public GameObject[ ] _board;
-	public Switch[ ] _switch;
 	public AudioSource _bgm;
 	public AudioSource _goal_sound;
 
@@ -132,9 +131,10 @@ public class Play : Scene {
 	}
 
 	public void resetSwicth( ) {
-		int switch_size = _switch.Length;
-		for ( int i = 0; i < switch_size; i++ ) {
-			_switch[ i ].reset( );
+		GameObject[ ] swiths = GameObject.FindGameObjectsWithTag( "Switch" );
+		int size = swiths.Length;
+		for ( int i = 0; i < size; i++ ) {
+			swiths[ i ].GetComponent< Switch >( ).reset( );
 		}
 	}
 
