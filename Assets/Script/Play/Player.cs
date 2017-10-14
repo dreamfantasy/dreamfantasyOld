@@ -17,7 +17,6 @@ public class Player : MonoBehaviour {
 	public Sprite[ ] _sprite;
 
 	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
-	private const int INIT_STOCK = 3;
 	private const int MOVE_SPEED = 5;
 	private const int MAX_ALLOW_SIZE = 5;
 
@@ -35,7 +34,6 @@ public class Player : MonoBehaviour {
 		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;
 		_allow.transform.localScale = Vector3.zero;
-		_play.setStockNum( INIT_STOCK );
 		_hp = _sprite.Length;
 		_action = ACTION.WAIT;
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
@@ -142,12 +140,8 @@ public class Player : MonoBehaviour {
 			SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
 			sprite.sprite = _sprite[ _hp - 1 ];
 		} else {
-			int stock = _play.getStockNum( );
-			stock--;
-			_play.setStockNum( stock );
-			if ( stock < 0 ) {
-				_play.setStockNum( 0 );
-				_play.setState( Play.STATE.GAME_OVER );
+			_play.deadPlayer( );
+			if ( _play.getState( ) == Play.STATE.GAME_OVER ) {
 				gameObject.SetActive( false );
 			} else {
 				reset( );

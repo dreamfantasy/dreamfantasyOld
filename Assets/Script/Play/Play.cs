@@ -21,6 +21,7 @@ public class Play : Scene {
 
 	private const int MAX_STAGE = 3;
 	private const int WAIT_TIME = 30;
+	private const int MAX_STOCK = 3;
 
 	private int _count;
 	private int _stage;
@@ -33,6 +34,7 @@ public class Play : Scene {
 		_count = 0;
 		_state = STATE.WAIT;
 		setAreaText( );
+		setStockNum( MAX_STOCK );
 
 		_board[ 0 ].SetActive( true );
 		_board[ 1 ].SetActive( false );
@@ -143,5 +145,14 @@ public class Play : Scene {
 			SceneManager.LoadScene( "TitleTutorial" );
 		}
 		SceneManager.LoadScene( "StageSelect" + getChapter( ) );
+	}
+
+	public void deadPlayer( ) {
+		int stock = getStockNum( ) - 1;
+		if ( stock < 0 ) {
+			stock = 0;
+			setState( Play.STATE.GAME_OVER );
+		}
+		setStockNum( stock );
 	}
 }

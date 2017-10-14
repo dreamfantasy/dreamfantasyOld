@@ -16,7 +16,7 @@ public class Scene : MonoBehaviour {
 	void Update ( ) {
 	}
 
-	public void setStockNum( int num ) {
+	protected void setStockNum( int num ) {
 		_stock_num = num;
 	}
 
@@ -24,7 +24,7 @@ public class Scene : MonoBehaviour {
 		return _stock_num;
 	}
 
-	public void setStage( int num ) {
+	protected void setStage( int num ) {
 		_stage = num;
 	}
 
@@ -32,7 +32,7 @@ public class Scene : MonoBehaviour {
 		return _stage;
 	}
 
-	public void setClearStage( int num ) {
+	protected void setClearStage( int num ) {
 		_clear_stage = num;
 	}
 
@@ -40,7 +40,7 @@ public class Scene : MonoBehaviour {
 		return _clear_stage;
 	}
 
-	public void setChapter( int num ) {
+	protected void setChapter( int num ) {
 		_chapter = 0;
 	}
 
@@ -48,7 +48,7 @@ public class Scene : MonoBehaviour {
 		return _chapter;
 	}
 	
-	public void setTutorial( bool value = false ) {
+	protected void setTutorial( bool value = false ) {
 		_tutorial = value;
 	}
 
