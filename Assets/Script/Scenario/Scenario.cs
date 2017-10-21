@@ -7,13 +7,17 @@ using System.Collections;
 
 
 public class Scenario : Scene {
-	public GameObject _text_box;
-	public GameObject _parentObject;
+	public Text _text;
+	public Text _name;
 	private ScenarioNovel.Novel[ ] _novels;
 	private int _line = 0;
 	private AudioSource _bgm;
-	private List< GameObject > _text_list = new List< GameObject >( );
 	private const float INTERVAL = 260;
+	
+	//待機系
+	private int _wait_count = 0;
+	private const int WAIT_TIME = 60;
+
 	// Use this for initialization
 	void Start( ) {
 		GameObject novel;
@@ -34,6 +38,10 @@ public class Scenario : Scene {
 	
 	// Update is called once per frame
 	void Update( ) {
+		if ( _wait_count < WAIT_TIME ) {
+			_wait_count++;
+			return;
+		}
 		if ( Device.getTouchPhase( ) == Device.PHASE.BEGAN ) {
 			if ( _line < _novels.Length ) {
 				readText( );
@@ -48,20 +56,8 @@ public class Scenario : Scene {
 	}
 
 	void readText( ) {
-		for ( int i = 0; i < _text_list.Count; i++ ) {
-			RectTransform trans = _text_list[ i ].GetComponent< RectTransform >( );
-			trans.anchoredPosition = trans.anchoredPosition + Vector2.down * INTERVAL;
-			if ( trans.anchoredPosition.y < INTERVAL / 2 ) {
-				_text_list[ i ].SetActive( false );
-			}
-		}
-		GameObject tmp = Instantiate( _text_box );
-		tmp.SetActive( true );
-		tmp.transform.SetParent( _parentObject.transform, false );
-		Text text = tmp.transform.Find( "Text" ).gameObject.GetComponent< Text >( );
-		text.text = _novels[ _line ].text;
-		_text_list.Add( tmp );
-		
+		_text.text = _novels[ _line ].text;
+		_name.text = _novels[ _line ].name;
 		_line++;
 	}
 
