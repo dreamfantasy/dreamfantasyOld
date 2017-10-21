@@ -84,7 +84,7 @@ public class Play : Scene {
 			case STATE.GAME_OVER:
 				if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 					if ( isTutorial( ) ) {
-						SceneManager.LoadScene ( "TitleTutorial" );
+						SceneManager.LoadScene ( "Title" );
 					} else {
 						SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 					}
@@ -148,7 +148,7 @@ public class Play : Scene {
 
 	public void retire( ) {	
 		if ( isTutorial( ) ) {
-			SceneManager.LoadScene( "TitleTutorial" );
+			SceneManager.LoadScene( "Title" );
 		} else {
 			SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 		}

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Game : MonoBehaviour {
+public class Game : Scene {
 
 	// Use this for initialization
 	void Start () {
-		SceneManager.LoadScene( "TitleTutorial" );
+		setTutorial( true );
+		SceneManager.LoadScene( "Title" );
 	}
 	
 	// Update is called once per frame
