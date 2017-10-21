@@ -11,6 +11,7 @@ public class Title : Scene {
 		touch_to_start.color = new Color( 1, 1, 1, 0 );
 		_bgm = gameObject.GetComponent< AudioSource >( );
 		_bgm.Play( );
+		setStage( 0 );
 	}
 	
 	// Update is called once per frame

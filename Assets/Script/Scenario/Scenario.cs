@@ -9,7 +9,7 @@ using System.Collections;
 public class Scenario : Scene {
 	public GameObject _text_box;
 	public GameObject _parentObject;
-	private string[ ] _novels;
+	private ScenarioNovel.Novel[ ] _novels;
 	private int _line = 0;
 	private AudioSource _bgm;
 	private List< GameObject > _text_list = new List< GameObject >( );
@@ -59,7 +59,7 @@ public class Scenario : Scene {
 		tmp.SetActive( true );
 		tmp.transform.SetParent( _parentObject.transform, false );
 		Text text = tmp.transform.Find( "Text" ).gameObject.GetComponent< Text >( );
-		text.text = _novels[ _line ];
+		text.text = _novels[ _line ].text;
 		_text_list.Add( tmp );
 		
 		_line++;

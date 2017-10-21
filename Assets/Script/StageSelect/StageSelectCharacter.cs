@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class StageSelectCharacter : MonoBehaviour {
 	//初期位置
-	public RectTransform _target_pos;
+	private RectTransform _target_pos;
 	//プレイヤーの動く速度
 	public float MOVE_SPEED;
 	//Scene
@@ -23,7 +23,8 @@ public class StageSelectCharacter : MonoBehaviour {
 
 		_pos = GetComponent< RectTransform >( );
 		StageSelect scene = GameObject.Find( "Script" ).GetComponent< StageSelect >( );
-		_pos.position = scene.getButton( scene.getStage( ) ).transform.position;
+		_target_pos = scene.getButton( scene.getStage( ) ).GetComponent< RectTransform >( );
+		_pos.position = _target_pos.position;
 	}
 	
 	/*-----------------ループ処理-------------------*/
