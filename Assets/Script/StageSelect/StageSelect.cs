@@ -33,4 +33,8 @@ public class StageSelect : Scene {
 		}
 		return clear;
 	}
+
+	public GameObject getButton( int idx ) {
+		return _button[ idx ];
+	}
 }

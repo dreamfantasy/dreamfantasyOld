@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 
 	private const double MOVE_SPEED = 7.0;
 	private const double MAX_ALLOW_SIZE = 0.5;
-	private const double ALLOW_SIZE_RATIO = 0.0008;
+	private const double ALLOW_SIZE_RATIO = 0.0013;
 	private const double MOVE_RANGE = 60.0;	//タッチを離したときのボールの動かない範囲
 
 
@@ -127,7 +127,9 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D( Collision2D collision ) {
-		if ( _collision ) {
+		if ( _collision ||
+			 _action == ACTION.WAIT ||
+			 _action == ACTION.NORMAL ) {
 			return;
 		}
 		_ref_se.Play( );

@@ -18,10 +18,12 @@ public class StageSelectCharacter : MonoBehaviour {
 
 	/*-----------------初期化処理-------------------*/
 	void Start( ) {
-		_pos = GetComponent< RectTransform >( );
-		_pos.position = _target_pos.position;
 		_select_se = GetComponent< AudioSource >( );
 		_selecting_stage = 0;
+
+		_pos = GetComponent< RectTransform >( );
+		StageSelect scene = GameObject.Find( "Script" ).GetComponent< StageSelect >( );
+		_pos.position = scene.getButton( scene.getStage( ) ).transform.position;
 	}
 	
 	/*-----------------ループ処理-------------------*/
