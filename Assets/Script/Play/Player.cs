@@ -15,9 +15,10 @@ public class Player : MonoBehaviour {
 	};
 	public Sprite[ ] _sprite;
 
-	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
-	private const int MOVE_SPEED = 5;
-	private const int MAX_ALLOW_SIZE = 5;
+	private const double MOVE_SPEED = 7.0;
+	private const double MAX_ALLOW_SIZE = 0.4;
+	private const double ALLOW_SIZE_RATIO = 0.0008;
+	private const double MOVE_RANGE = 30.0;	//タッチを離したときのボールの動かない範囲
 
 
 	protected Play _play;
@@ -30,7 +31,18 @@ public class Player : MonoBehaviour {
 	private ACTION _action;
 
 	void Start( ) {
-		_play = GameObject.Find( "Script" ).GetComponent< Play >( );
+	}
+	
+
+	void Update( ) {
+		act( );
+	}
+
+	virtual protected void Awake ( ) {
+		{//オブジェクトを見つける
+			GameObject playbase = GameObject.Find( "PlayBase" );
+			_play   = playbase.transform.Find( "Script" ).GetComponent< Play >( );
+		}
 		Transform trans = GetComponent< Transform >( );
 		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;
@@ -40,24 +52,26 @@ public class Player : MonoBehaviour {
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
 		_ref_se = GetComponent< AudioSource >( );
 	}
-	
 
-	void Update( ) {
+	protected void act( ) {
 		_collision = false;
 		switch( _action ) {
 			case ACTION.WAIT:
+				//強制待機
 				if ( _play.getState( ) == Play.STATE.PLAY ) {
 					_action = ACTION.NORMAL;
 				}
 				break;
 			case ACTION.NORMAL:
+				//入力待機
 				actOnNormal( );
 				break;
 			case ACTION.STRETCH:
+				//球を引っ張る
 				actOnStretch( );
 				break;
 			case ACTION.MOVE:
-				actOnMove( );
+				//自動移動
 				break;
 		}
 	}
@@ -69,10 +83,10 @@ public class Player : MonoBehaviour {
 			//指を動かしているとき
 
 			//矢印の大きさを計算
-			Vector2 size = Vector2.one * vec.magnitude * 0.002f;
+			Vector2 size = Vector2.one * vec.magnitude * ( float )ALLOW_SIZE_RATIO;
 			if ( size.magnitude > MAX_ALLOW_SIZE ) {
 				//矢印は一定以上の大きさにしない
-				size = size.normalized * MAX_ALLOW_SIZE;
+				size = size.normalized * ( float )MAX_ALLOW_SIZE;
 			}
 			_allow.transform.localScale = size;
 
@@ -92,7 +106,7 @@ public class Player : MonoBehaviour {
 			if ( vec.magnitude > MOVE_RANGE ) {
 				//指の位置が変わってた場合動かす
 				Rigidbody2D rd = GetComponent< Rigidbody2D >( );
-				rd.velocity += vec.normalized * MOVE_SPEED;
+				rd.velocity += vec.normalized * ( float )MOVE_SPEED;
 				_action = ACTION.MOVE;
 			} else {
 				//指の位置が変わらなかった場合待機状態へ戻る
@@ -107,10 +121,6 @@ public class Player : MonoBehaviour {
 			_action = ACTION.STRETCH;
 		}
 	}
-
-	private void actOnMove( ) {
-	}
-
 
 	void OnCollisionEnter2D( Collision2D collision ) {
 		if ( _collision ) {
@@ -154,7 +164,7 @@ public class Player : MonoBehaviour {
 		return _hp;
 	}
 
-	virtual public void reset( ) {
+	virtual protected void reset( ) {
 		_action = ACTION.WAIT;
 		_hp = _sprite.Length;
 		_play.resetSwicth( );
