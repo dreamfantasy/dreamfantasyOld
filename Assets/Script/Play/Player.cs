@@ -16,9 +16,9 @@ public class Player : MonoBehaviour {
 	public Sprite[ ] _sprite;
 
 	private const double MOVE_SPEED = 7.0;
-	private const double MAX_ALLOW_SIZE = 0.4;
+	private const double MAX_ALLOW_SIZE = 0.5;
 	private const double ALLOW_SIZE_RATIO = 0.0008;
-	private const double MOVE_RANGE = 30.0;	//タッチを離したときのボールの動かない範囲
+	private const double MOVE_RANGE = 60.0;	//タッチを離したときのボールの動かない範囲
 
 
 	protected Play _play;
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour {
 			case ACTION.WAIT:
 				//強制待機
 				if ( _play.getState( ) == Play.STATE.PLAY ) {
-					_action = ACTION.NORMAL;
+					setActionNormal( );
 				}
 				break;
 			case ACTION.NORMAL:
@@ -74,6 +74,10 @@ public class Player : MonoBehaviour {
 				//自動移動
 				break;
 		}
+	}
+
+	virtual protected void setActionNormal( ) {
+		_action = ACTION.NORMAL;
 	}
 
 	private void actOnStretch( ) {

@@ -42,5 +42,9 @@ public class PlayerTutorial : Player {
 		base.reset( );
 	}
 
-	
+	override protected void setActionNormal ( ) {
+		base.setActionNormal( );
+		_pop_up.setActive( );
+
+	}
 }
