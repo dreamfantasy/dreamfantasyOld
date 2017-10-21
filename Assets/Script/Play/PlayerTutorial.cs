@@ -16,16 +16,21 @@ public class PlayerTutorial : Player {
 		MAX
 	};
 
-	public PopUpTutorial _pop_up;
 
 	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
 	private const int INIT_STOCK = 3;
-	private const int MOVE_SPEED = 10;
+	private const int MOVE_SPEED = 6;
 	private const int MAX_ALLOW_SIZE = 5;
+	private PopUpTutorial _pop_up;
 
 	private ACTION _action;
 
 	void Start( ) {
+		{//オブジェクトを見つける
+			GameObject playbase = GameObject.Find( "PlayBase" );
+			_play   = playbase.transform.Find( "Script" ).GetComponent< Play >( );
+			_pop_up = playbase.transform.Find( "PopUp"  ).GetComponent< PopUpTutorial >( );
+		}
 		Transform trans = GetComponent< Transform >( );
 		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;

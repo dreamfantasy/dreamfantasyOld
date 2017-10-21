@@ -2,8 +2,9 @@
 
 public class Switch : MonoBehaviour {
 	// Use this for initialization
-	public GameObject _goal;
+	private GameObject _goal;
 	void Start( ) {
+		_goal = GameObject.Find( "Goal" );
 		_goal.GetComponent< Goal >( ).setTrans( true );
 	}
 	

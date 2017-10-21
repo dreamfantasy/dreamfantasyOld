@@ -13,7 +13,6 @@ public class Player : MonoBehaviour {
 		CLAY,
 		MAX
 	};
-	public Play _play;
 	public Sprite[ ] _sprite;
 
 	private const int MOVE_RANGE = 10;	//タッチを離したときのボールの動かない範囲
@@ -21,6 +20,7 @@ public class Player : MonoBehaviour {
 	private const int MAX_ALLOW_SIZE = 5;
 
 
+	protected Play _play;
 	protected int _hp;			//壁に当たれる回数
 	protected bool _collision;	//1フレームに1度しかあたらないようにするための変数
 	protected GameObject _allow;
@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
 	private ACTION _action;
 
 	void Start( ) {
+		_play = GameObject.Find( "Script" ).GetComponent< Play >( );
 		Transform trans = GetComponent< Transform >( );
 		_start_pos = trans.position;
 		_allow = trans.Find( "Allow" ).gameObject;

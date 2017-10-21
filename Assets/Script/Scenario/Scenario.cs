@@ -70,7 +70,7 @@ public class Scenario : Scene {
 			SceneManager.LoadScene( "PlayTutorial" );
 		} else {
 			if ( getStage( ) < 3 ) {
-				SceneManager.LoadScene( "Play" + getChapter( ) + "_" + getStage( ) );
+				SceneManager.LoadScene( "Play" );
 			} else {
 				setTutorial( true );
 				SceneManager.LoadScene( "Title" );

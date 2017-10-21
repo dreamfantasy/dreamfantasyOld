@@ -15,9 +15,9 @@ public class Play : Scene {
 	public GameObject _text_game_clear;
 	public GameObject _text_game_over;
 	public GameObject[ ] _stocks;
-	public GameObject[ ] _board;
 	public AudioSource _bgm;
 	public AudioSource _goal_sound;
+	private GameObject[ ] _board;
 
 	private const int MAX_STAGE = 3;
 	private const int WAIT_TIME = 30;
@@ -36,10 +36,16 @@ public class Play : Scene {
 		setAreaText( );
 		setStockNum( MAX_STOCK );
 		updateStockNum( );
+		_board = new GameObject[ 3 ];
+		for ( int i = 0; i < 3; i++ ) {
+			if ( isTutorial( ) ) {
+				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Board/Tutorial/Board" + i ) as GameObject );
+			} else {
+				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Board/" + getChapter( ) + "_" + getStage( ) + "/Board" + i ) as GameObject );
+			}
+			_board[ i ].SetActive( false );
+		}
 		_board[ 0 ].SetActive( true );
-		_board[ 1 ].SetActive( false );
-		_board[ 2 ].SetActive( false );
-		
 		_bgm.Play( );
 	}
 
@@ -143,8 +149,9 @@ public class Play : Scene {
 	public void retire( ) {	
 		if ( isTutorial( ) ) {
 			SceneManager.LoadScene( "TitleTutorial" );
+		} else {
+			SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 		}
-		SceneManager.LoadScene( "StageSelect" + getChapter( ) );
 	}
 
 	public void deadPlayer( ) {

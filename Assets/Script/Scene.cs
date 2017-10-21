@@ -48,7 +48,7 @@ public class Scene : MonoBehaviour {
 		return _chapter;
 	}
 	
-	protected void setTutorial( bool value = false ) {
+	protected void setTutorial( bool value ) {
 		_tutorial = value;
 	}
 
