@@ -147,6 +147,9 @@ public class Play : Scene {
 	}
 
 	public void retire( ) {	
+		if ( _count < WAIT_TIME ) {
+			return;
+		}
 		if ( isTutorial( ) ) {
 			SceneManager.LoadScene( "Title" );
 		} else {
