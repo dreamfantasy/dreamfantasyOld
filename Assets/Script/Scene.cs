@@ -16,6 +16,14 @@ public class Scene : MonoBehaviour {
 	void Update ( ) {
 	}
 
+	public void init ( ) {
+		_stock_num = 0;
+		_chapter = 0;
+		_stage = 0;
+		_clear_stage = -1;
+		_tutorial = true; 
+	}
+
 	protected void setStockNum( int num ) {
 		_stock_num = num;
 	}

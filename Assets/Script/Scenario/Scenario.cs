@@ -68,7 +68,7 @@ public class Scenario : Scene {
 			if ( getStage( ) < 3 ) {
 				SceneManager.LoadScene( "Play" );
 			} else {
-				setTutorial( true );
+				init( );
 				SceneManager.LoadScene( "Title" );
 			}
 		}
