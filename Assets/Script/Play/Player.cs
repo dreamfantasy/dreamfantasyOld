@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
 	protected Vector2 _start_pos;
 	protected AudioSource _ref_se;
 	private ACTION _action;
-
+	private LineRenderer _line;
 	void Start( ) {
 	}
 	
@@ -51,10 +51,21 @@ public class Player : MonoBehaviour {
 		_action = ACTION.WAIT;
 		GetComponent< SpriteRenderer >( ).sprite = _sprite[ _hp - 1 ];
 		_ref_se = GetComponent< AudioSource >( );
+		
+		//線
+		_line = gameObject.AddComponent< LineRenderer >( );
+		//マテリアル
+		_line.material = new Material( Shader.Find("Unlit/Color") );
+		_line.material.color = new Color( 1.0f, 0, 0, 0.2f );
+		//線の幅
+		_line.startWidth = 0.02f;
+		_line.endWidth = 0.02f;
 	}
 
 	protected void act( ) {
 		_collision = false;
+		_line.positionCount = 0;
+
 		switch( _action ) {
 			case ACTION.WAIT:
 				//強制待機
@@ -85,20 +96,41 @@ public class Player : MonoBehaviour {
 
 		if ( Device.getTouchPhase( ) == Device.PHASE.MOVED ) {
 			//指を動かしているとき
+			if ( vec.magnitude > MOVE_RANGE ) {
+				//球が動く範囲の場合
 
-			//矢印の大きさを計算
-			Vector2 size = Vector2.one * vec.magnitude * ( float )ALLOW_SIZE_RATIO;
-			if ( size.magnitude > MAX_ALLOW_SIZE ) {
-				//矢印は一定以上の大きさにしない
-				size = size.normalized * ( float )MAX_ALLOW_SIZE;
+				//矢印のサイズ計算
+				Vector2 size = Vector2.one * vec.magnitude * ( float )ALLOW_SIZE_RATIO;
+				if ( size.magnitude > MAX_ALLOW_SIZE ) {
+					//矢印は一定以上の大きさにしない
+					size = size.normalized * ( float )MAX_ALLOW_SIZE;
+				}
+				_allow.transform.localScale = size;
+
+				//矢印の向きを計算( cross(外積)で回転方向、angleで角度を求めることによってrotを求める )
+				float angle = Vector2.Angle( Vector2.up, vec );
+				Vector3 axis = Vector3.Cross( Vector3.up, vec );
+				Quaternion rot = Quaternion.AngleAxis( angle, axis );
+				_allow.transform.localRotation = rot;
+
+				//線描画
+				_line.positionCount = 2;
+				_line = gameObject.GetComponent< LineRenderer >( );
+				Vector3 add1 = vec.normalized * 0.5f;
+				Vector3 add2 = vec.normalized * 100.0f;
+				Vector3 [ ] positions = {
+					transform.position + add1,
+					transform.position + add2
+				};
+				positions[ 0 ].z = -1.0f;
+				positions[ 1 ].z = -1.0f;
+				_line.SetPositions( positions );
+			} else {
+				//球が動かない範囲の場合
+
+				//矢印非表示
+				_allow.transform.localScale = Vector3.zero;
 			}
-			_allow.transform.localScale = size;
-
-			//矢印の向きを計算( cross(外積)で回転方向、angleで角度を求めることによってrotを求める )
-			float angle = Vector2.Angle( Vector2.up, vec );
-			Vector3 axis = Vector3.Cross( Vector3.up, vec );
-			Quaternion rot = Quaternion.AngleAxis( angle, axis );
-			_allow.transform.localRotation = rot;
 		}
 
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {

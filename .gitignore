@@ -18,3 +18,4 @@ ExportedObj/
 *.unityproj
 *.booproj
 Build/
+ios/
