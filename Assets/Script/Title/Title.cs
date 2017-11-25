@@ -65,5 +65,30 @@ public class Title : Scene {
 		if ( !_bgm.isPlaying ) {
 			_bgm.Play( );
 		}
+
+
+		if (Input.GetKeyDown ("0")) {
+			setTutorial (false);
+			setStage (0);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("1")) {
+			setTutorial (false);
+			setStage (1);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("2")) {
+			setTutorial (false);
+			setStage (2);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("3")) {
+			setTutorial (false);
+			setStage (3);
+			SceneManager.LoadScene ("Play");
+		}
 	}
 }

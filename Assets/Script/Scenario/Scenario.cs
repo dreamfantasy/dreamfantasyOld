@@ -17,6 +17,7 @@ public class Scenario : Scene {
 	//待機系
 	private int _wait_count = 0;
 	private const int WAIT_TIME = 60;
+	private const int END_STAGE = 4;
 
 	// Use this for initialization
 	void Start( ) {
@@ -24,7 +25,7 @@ public class Scenario : Scene {
 		if ( isTutorial( ) ) {
 			novel = ( GameObject )Resources.Load( "Prefab/Scenario/ScenarioTurorial" );
 		} else {
-			if ( getStage( ) < 3 ) {
+			if ( getStage( ) < END_STAGE ) {
 				novel = ( GameObject )Resources.Load( "Prefab/Scenario/Scenario" + getChapter( ).ToString( ) + "_" + getStage( ).ToString( ) );
 			} else {
 				novel = ( GameObject )Resources.Load( "Prefab/Scenario/ScenarioEnd" );
@@ -65,7 +66,7 @@ public class Scenario : Scene {
 		if ( isTutorial( ) ) {
 			SceneManager.LoadScene( "PlayTutorial" );
 		} else {
-			if ( getStage( ) < 3 ) {
+			if ( getStage( ) < END_STAGE ) {
 				SceneManager.LoadScene( "Play" );
 			} else {
 				init( );
