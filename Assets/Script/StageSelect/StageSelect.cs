@@ -18,6 +18,26 @@ public class StageSelect : Scene {
 	
 
 	void Update( ) {
+
+		if (Input.GetKeyDown ("0")) {
+			setStage (0);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("1")) {
+			setStage (1);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("2")) {
+			setStage (2);
+			SceneManager.LoadScene ("Play");
+		}
+
+		if (Input.GetKeyDown ("3")) {
+			setStage (3);
+			SceneManager.LoadScene ("Play");
+		}
 	}
 
 	public void selectStage( int stage ) {
