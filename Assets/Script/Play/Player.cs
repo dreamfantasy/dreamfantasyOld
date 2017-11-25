@@ -64,8 +64,8 @@ public class Player : MonoBehaviour {
 
 	protected void act( ) {
 		_collision = false;
-		_line.positionCount = 0;
-
+		Vector3[ ] positions = { };
+		_line.SetPositions( positions );
 		switch( _action ) {
 			case ACTION.WAIT:
 				//強制待機
@@ -114,7 +114,6 @@ public class Player : MonoBehaviour {
 				_allow.transform.localRotation = rot;
 
 				//線描画
-				_line.positionCount = 2;
 				_line = gameObject.GetComponent< LineRenderer >( );
 				Vector3 add1 = vec.normalized * 0.5f;
 				Vector3 add2 = vec.normalized * 100.0f;
