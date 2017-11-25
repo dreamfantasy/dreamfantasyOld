@@ -1,21 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
+using System.Collections;
 
 public class Title : Scene {
 	public Image touch_to_start;
 	private float _alpha_speed = 0.01f;
 	private AudioSource _bgm;
+	private VideoPlayer _video;
+	private int _count;
+
+	private const int WAIT_TIME = 150;
+
 	// Use this for initialization
 	void Start( ) {
 		touch_to_start.color = new Color( 1, 1, 1, 0 );
 		_bgm = gameObject.GetComponent< AudioSource >( );
 		_bgm.Play( );
 		setStage( 0 );
+		_video = gameObject.GetComponent< VideoPlayer >( );
+		_video.Stop( );
 	}
 	
 	// Update is called once per frame
 	void Update( ) {
+		_count++;
+		if ( _count > WAIT_TIME ) {
+			if ( !_video.isPlaying ) {
+				_video.Play( );
+			}
+		}
+
+
 		float alpha = touch_to_start.color.a;
 		alpha += _alpha_speed;
 		if ( _alpha_speed > 0 ) {
@@ -33,11 +50,16 @@ public class Title : Scene {
 
 		
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			if ( isTutorial( ) ) {
-				SceneManager.LoadScene( "Scenario" );
+			if ( _video.isPlaying ) {
+				_count = 0;
+				_video.Stop( );
 			} else {
-				//SceneManager.LoadScene( "ChapterSelect" );
-				SceneManager.LoadScene( "StageSelect0" );
+				if ( isTutorial( ) ) {
+					SceneManager.LoadScene( "Scenario" );
+				} else {
+					//SceneManager.LoadScene( "ChapterSelect" );
+					SceneManager.LoadScene( "StageSelect0" );
+				}
 			}
 		}
 		if ( !_bgm.isPlaying ) {
