@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
 using System.Collections;
 
 public class Title : Scene {
 	public Image touch_to_start;
 	private float _alpha_speed = 0.01f;
 	private AudioSource _bgm;
-	private VideoPlayer _video;
+	//private VideoPlayer _video;
 	private int _count;
 
 	private const int WAIT_TIME = 150;
@@ -19,17 +18,17 @@ public class Title : Scene {
 		_bgm = gameObject.GetComponent< AudioSource >( );
 		_bgm.Play( );
 		setStage( 0 );
-		_video = gameObject.GetComponent< VideoPlayer >( );
-		_video.Stop( );
+		//_video = gameObject.GetComponent< VideoPlayer >( );
+		//_video.Stop( );
 	}
 	
 	// Update is called once per frame
 	void Update( ) {
 		_count++;
 		if ( _count > WAIT_TIME ) {
-			if ( !_video.isPlaying ) {
-				_video.Play( );
-			}
+			//if ( !_video.isPlaying ) {
+			//	_video.Play( );
+			//}
 		}
 
 
@@ -48,7 +47,7 @@ public class Title : Scene {
 		}
 		touch_to_start.color = new Color( 1, 1, 1, alpha );
 
-		
+		/*
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
 			if ( _video.isPlaying ) {
 				_count = 0;
@@ -62,6 +61,7 @@ public class Title : Scene {
 				}
 			}
 		}
+		*/
 		if ( !_bgm.isPlaying ) {
 			_bgm.Play( );
 		}
