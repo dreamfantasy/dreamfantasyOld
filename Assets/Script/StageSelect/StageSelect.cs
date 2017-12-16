@@ -38,6 +38,12 @@ public class StageSelect : Scene {
 			setStage (3);
 			SceneManager.LoadScene ("Play");
 		}
+
+		
+		if (Input.GetKeyDown ("4")) {
+			setStage (4);
+			SceneManager.LoadScene ("Play");
+		}
 	}
 
 	public void selectStage( int stage ) {

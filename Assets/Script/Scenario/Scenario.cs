@@ -17,7 +17,7 @@ public class Scenario : Scene {
 	//待機系
 	private int _wait_count = 0;
 	private const int WAIT_TIME = 60;
-	private const int END_STAGE = 4;
+	private const int END_STAGE = 5;
 
 	// Use this for initialization
 	void Start( ) {

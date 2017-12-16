@@ -89,5 +89,11 @@ public class Title : Scene {
 			setStage (3);
 			SceneManager.LoadScene ("Play");
 		}
+
+		if (Input.GetKeyDown ("4")) {
+			setTutorial (false);
+			setStage (4);
+			SceneManager.LoadScene ("Play");
+		}
 	}
 }

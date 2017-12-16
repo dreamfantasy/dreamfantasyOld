@@ -5,13 +5,17 @@ using UnityEngine;
 public class Goal : MonoBehaviour {
 	private bool _trans;
 	private float _alpha_speed;
+	private int _hp;
+	private int _max_hp;
 	// Use this for initialization
-	void Start ( ) {
+	protected void Start ( ) {
+		_max_hp = 1;
+		_hp = 1;
 		_trans = false;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	 protected void Update () {
 		if ( _trans ) {
 			SpriteRenderer sprite = GetComponent< SpriteRenderer >( );
 			if ( sprite.color.a > 0.4 ) {
@@ -30,6 +34,14 @@ public class Goal : MonoBehaviour {
 
 	public void setTrans( bool trans ) {
 		if ( trans ) {
+			_hp = _max_hp;
+		} else {
+			_hp--;
+			if ( _hp > 0 ) {
+				return;
+			}
+		}
+		if ( trans ) {
 			GetComponent< SpriteRenderer >( ).color = new Color( 1, 1, 1, 0.3f );
 			_alpha_speed = 0.003f;
 		} else {
@@ -41,5 +53,12 @@ public class Goal : MonoBehaviour {
 
 	public bool isTrans( ) {
 		return _trans;
+	}
+
+	protected void setHp( int hp ) {
+		if ( _max_hp < hp ) {
+			_max_hp = hp;
+		}
+		_hp = hp;
 	}
 }
