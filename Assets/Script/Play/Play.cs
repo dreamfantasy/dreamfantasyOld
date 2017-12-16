@@ -39,9 +39,9 @@ public class Play : Scene {
 		_board = new GameObject[ 3 ];
 		for ( int i = 0; i < 3; i++ ) {
 			if ( isTutorial( ) ) {
-				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Board/Tutorial/Board" + i ) as GameObject );
+				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Play/Board/Tutorial/Board" + i ) as GameObject );
 			} else {
-				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Board/" + getChapter( ) + "_" + getStage( ) + "/Board" + i ) as GameObject );
+				_board[ i ] = GameObject.Instantiate( Resources.Load( "Prefab/Play/Board/" + getChapter( ) + "_" + getStage( ) + "/Board" + i ) as GameObject );
 			}
 			_board[ i ].SetActive( false );
 		}

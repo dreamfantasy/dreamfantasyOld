@@ -46,22 +46,21 @@ public class Title : Scene {
 			}
 		}
 		touch_to_start.color = new Color( 1, 1, 1, alpha );
-
-		/*
+		
 		if ( Device.getTouchPhase( ) == Device.PHASE.ENDED ) {
-			if ( _video.isPlaying ) {
-				_count = 0;
-				_video.Stop( );
-			} else {
+			//if ( _video.isPlaying ) {
+			//	_count = 0;
+			//	_video.Stop( );
+			//} else {
 				if ( isTutorial( ) ) {
 					SceneManager.LoadScene( "Scenario" );
 				} else {
 					//SceneManager.LoadScene( "ChapterSelect" );
 					SceneManager.LoadScene( "StageSelect0" );
 				}
-			}
+			//}
 		}
-		*/
+
 		if ( !_bgm.isPlaying ) {
 			_bgm.Play( );
 		}
